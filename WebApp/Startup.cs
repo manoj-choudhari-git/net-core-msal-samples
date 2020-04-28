@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.TokenCacheProviders.InMemory;
 using Microsoft.Identity.Web.UI;
 
 namespace WebApp
@@ -38,6 +39,8 @@ namespace WebApp
             });
 
             services.AddSignIn(Configuration, "AzureAd");
+            services.AddWebAppCallsProtectedWebApi(Configuration, initialScopes: new string[] { "user.read", "api://5e971e5c-a661-4d82-ba97-935480492129/access_as_user" })
+                    .AddInMemoryTokenCaches();
 
             services.AddRazorPages().AddMvcOptions(options =>
             {
@@ -75,6 +78,12 @@ namespace WebApp
 
             app.UseEndpoints(endpoints =>
             {
+                // Logout redirection does not work without this MVC route
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                // Default razor endpoints
                 endpoints.MapRazorPages();
             });
         }
