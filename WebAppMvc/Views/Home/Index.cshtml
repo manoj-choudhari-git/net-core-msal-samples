@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using WebAPI;
+@model List<WeatherForecast>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temperature</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Date</td>
+                        <td>@item.TemperatureC</td>
+                        <td>@item.Summary</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+</div>
