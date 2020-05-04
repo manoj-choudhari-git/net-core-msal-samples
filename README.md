@@ -22,12 +22,18 @@ You can find more details about how to protect web API at [this blog post](https
 There can be many possible scnearios depending on how the applications are generally structured in real world. 
 I have tried to explain some of the scenarios, below are the details.
 
+
 ## Protected Web App Calling Protected Web API 
 This scenario is explained in [one of my blog post](https://manojchoudhari.wordpress.com/2020/05/04/securing-net-core-web-app-calling-web-api-using-msal-and-azure-ad/).
 
+
 ## Protected Single Page App calling Protected Web API
 
+
+
 ## Protected WPF Application calling Protected Web API
+
+
 
 
 # How to Run Samples ?
