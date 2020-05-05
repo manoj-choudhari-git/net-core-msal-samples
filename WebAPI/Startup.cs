@@ -43,6 +43,20 @@ namespace WebAPI
 
             app.UseRouting();
 
+            // NOTE: this is required for Angular Web App
+            // localhost:44380 is for WebAppAngular project
+            // localhost:4200 is required if you use angular CLI 
+            // to create app and run it using ng serve
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("https://localhost:44380")
+                        .WithOrigins("http://localhost:4200")
+                        .AllowCredentials()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+            });
+
+
             app.UseAuthentication();
             app.UseAuthorization();
 
