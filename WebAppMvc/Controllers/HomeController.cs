@@ -27,26 +27,22 @@ namespace WebAppMvc.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //using (var httpClient = new HttpClient())
-            //{
-            //    using (var response = await httpClient.GetAsync("https://localhost:44389/weatherforecast"))
-            //    {
-            //        string apiResponse = await response.Content.ReadAsStringAsync();
-            //        var apiOutput = JsonConvert.DeserializeObject<List<WeatherForecast>>(apiResponse);
-            //        return View(apiOutput);
-            //    }
-            //}
-
             //// Acquire the access token.
-            string[] scopes = new string[] { "user.read", "api://5e971e5c-a661-4d82-ba97-935480492129/access_as_user" };
+            string[] scopes = new string[] { "api://5e971e5c-a661-4d82-ba97-935480492129/access_as_user" };
             string accessToken = await _tokenAcquisition.GetAccessTokenForUserAsync(scopes);
-            string url = "https://localhost:44389/weatherforecast";
 
             // Use the access token to call a protected web API.
             HttpClient client = new HttpClient();
+            string url = "https://localhost:44389/weatherforecast";
+            
+            // Set Bearer Token
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            // Call API
             string json = await client.GetStringAsync(url);
             var apiOutput = JsonConvert.DeserializeObject<List<WeatherForecast>>(json);
+
+            // Send Data To View
             return View(apiOutput);
         }
 

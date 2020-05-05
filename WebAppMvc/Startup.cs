@@ -41,11 +41,10 @@ namespace WebAppMvc
             services.AddSignIn(Configuration, "AzureAd");
             services.AddWebAppCallsProtectedWebApi(Configuration, initialScopes: new string[] { "user.read", "api://5e971e5c-a661-4d82-ba97-935480492129/access_as_user" })
                     .AddInMemoryTokenCaches();
-                
 
             // Then, choose your implementation.
             // For instance, the distributed in-memory cache (not cleared when you stop the app):
-            //// services.AddDistributedMemoryCache();
+            services.AddDistributedMemoryCache();
 
             services.AddRazorPages().AddMvcOptions(options =>
             {
