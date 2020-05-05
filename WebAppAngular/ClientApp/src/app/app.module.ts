@@ -23,7 +23,7 @@ export const protectedResourceMap: [string, string[]][] = [
       {
         auth: {
           clientId: 'd471db94-db21-4103-aefa-679cd7435745', // This is your client ID
-          authority: 'https://login.microsoftonline.com/d26c9159-7165-4322-bf28-6c98626e9619', // This is your tenant ID
+          authority: 'https://login.microsoftonline.com/da41245a5-11b3-996c-00a8-4d99re19f292', // This is your tenant ID
           redirectUri: 'https://localhost:44380/',  // This is your redirect URI
           postLogoutRedirectUri: "https://localhost:44380/",
           navigateToLoginRequestUrl: true,
