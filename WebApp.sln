@@ -9,7 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppMvc", "WebAppMvc\WebAppMvc.csproj", "{390708D7-E5C0-460E-BA59-CAC267639BB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppAngular", "WebAppAngular\WebAppAngular.csproj", "{D8C2B80F-8196-4D7F-A96A-95500F6DD95C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppAngular", "WebAppAngular\WebAppAngular.csproj", "{D8C2B80F-8196-4D7F-A96A-95500F6DD95C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B2C.WebApi", "B2C.WebApi\B2C.WebApi.csproj", "{ED148486-C2C7-4292-A05D-27F9E4246E53}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzureAdB2C", "AzureAdB2C", "{574BA0B1-7CD5-4B3B-B0DA-A6E1ADB31F80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B2CWebAngularApp", "B2CWebAngularApp\B2CWebAngularApp.csproj", "{2FF643D1-02FD-41BA-BE77-E46B94D62E8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +39,21 @@ Global
 		{D8C2B80F-8196-4D7F-A96A-95500F6DD95C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8C2B80F-8196-4D7F-A96A-95500F6DD95C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8C2B80F-8196-4D7F-A96A-95500F6DD95C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED148486-C2C7-4292-A05D-27F9E4246E53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED148486-C2C7-4292-A05D-27F9E4246E53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED148486-C2C7-4292-A05D-27F9E4246E53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED148486-C2C7-4292-A05D-27F9E4246E53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FF643D1-02FD-41BA-BE77-E46B94D62E8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FF643D1-02FD-41BA-BE77-E46B94D62E8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FF643D1-02FD-41BA-BE77-E46B94D62E8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FF643D1-02FD-41BA-BE77-E46B94D62E8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ED148486-C2C7-4292-A05D-27F9E4246E53} = {574BA0B1-7CD5-4B3B-B0DA-A6E1ADB31F80}
+		{2FF643D1-02FD-41BA-BE77-E46B94D62E8D} = {574BA0B1-7CD5-4B3B-B0DA-A6E1ADB31F80}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A8153F37-7F6E-4CF3-B650-5AF7CE2C9B18}
