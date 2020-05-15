@@ -26,11 +26,11 @@ export const b2cPolicies = {
 
 
 /***********************************************************
- * STEP 2 - Web API Scopes & URLs (Not Relevant For This Post)
+ * STEP 2 - Web API Scopes & URLs 
  ***********************************************************/
 export const apiConfig: { b2cScopes: string[], webApi: string } = {
-  b2cScopes: ['https://samplead.onmicrosoft.com/helloapi/demo.read'],
-  webApi: 'https://sampleadhello.azurewebsites.net/hello'
+  b2cScopes: ['https://samplead.onmicrosoft.com/sample-api/api-scope'],
+  webApi: 'https://localhost:44379/weatherforecast'
 };
 
 
@@ -40,7 +40,7 @@ export const apiConfig: { b2cScopes: string[], webApi: string } = {
  ***********************************************************/
 export const msalConfig: Configuration = {
   auth: {
-    clientId: "3227a83e-c3bc-482d-82a1-9eee30b73609",
+    clientId: "3117a83e-c3bc-482d-82a1-9eee30b73609",
     authority: b2cPolicies.authorities.signUpSignIn.authority,
     redirectUri: "https://localhost:44361/",
     postLogoutRedirectUri: "https://localhost:44361/",

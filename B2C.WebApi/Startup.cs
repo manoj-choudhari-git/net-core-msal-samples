@@ -42,12 +42,11 @@ namespace B2C.WebApi
 
             app.UseCors(builder =>
             {
-                builder.WithOrigins("http://localhost:4200")
+                builder.WithOrigins("https://localhost:44361")
                         .AllowCredentials()
                         .AllowAnyMethod()
                         .AllowAnyHeader();
             });
-
 
             app.UseRouting();
 
