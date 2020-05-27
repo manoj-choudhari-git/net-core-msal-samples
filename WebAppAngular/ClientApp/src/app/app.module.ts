@@ -39,11 +39,11 @@ export const protectedResourceMap: [string, string[]][] = [
           "user.read",
           "openid",
           "profile",
-          "api://5e971e5c-a661-4d82-ba97-935480492129/access_as_user"
+          "api://5e999e55-a661-4982-b897-965480492129/access_as_user"
         ],
         unprotectedResources: ["https://www.microsoft.com/en-us/"],
         protectedResourceMap:[
-          ['https://localhost:44389/weatherforecast', ['api://5e971e5c-a661-4d82-ba97-935480492129/access_as_user']],
+          ['https://localhost:44389/weatherforecast', ['api://5e999e55-a661-4982-b897-965480492129/access_as_user']],
           ['https://graph.microsoft.com/v1.0/me', ['user.read']]
         ],
         extraQueryParameters: {}

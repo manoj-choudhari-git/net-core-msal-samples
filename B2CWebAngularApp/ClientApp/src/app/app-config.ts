@@ -11,12 +11,12 @@ export const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 ||
  ***********************************************************/
 export const b2cPolicies = {
   names: {
-    signUpSignIn: "B2C_1_SignUpSignIn",
+    signUpSignIn: "B2C_1_SignUpSignInMFA",
     resetPassword: "B2C_1_Reset",
   },
   authorities: {
     signUpSignIn: {
-      authority: "https://samplead.b2clogin.com/samplead.onmicrosoft.com/B2C_1_SignUpSignIn"
+      authority: "https://samplead.b2clogin.com/samplead.onmicrosoft.com/B2C_1_SignUpSignInMFA"
     },
     resetPassword: {
       authority: "https://samplead.b2clogin.com/samplead.onmicrosoft.com/b2c_1_reset"

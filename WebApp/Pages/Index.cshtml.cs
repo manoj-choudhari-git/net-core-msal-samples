@@ -33,9 +33,10 @@ namespace WebApp.Pages
         public async Task OnPostRaiseApiCall()
         {
             //// Acquire the access token.
-            string[] scopes = new string[] { "user.read", "api://5e971e5c-a661-4d82-ba97-935480492129/access_as_user" };
+            string[] scopes = new string[] { "user.read", "api://ffff3e7b-20cb-42cb-8a23-2d6c8003ee3a/caller-api" };
             string accessToken = await _tokenAcquisition.GetAccessTokenForUserAsync(scopes);
-            string url = "https://localhost:44389/weatherforecast";
+            ///string url = "https://localhost:44389/weatherforecast";
+            string url = "https://localhost:44370/weatherforecast";
 
             // Use the access token to call a protected web API.
             HttpClient client = new HttpClient();

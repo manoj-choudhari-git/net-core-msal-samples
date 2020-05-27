@@ -39,7 +39,7 @@ namespace WebAppMvc
             });
 
             services.AddSignIn(Configuration, "AzureAd");
-            services.AddWebAppCallsProtectedWebApi(Configuration, initialScopes: new string[] { "user.read", "api://5e971e5c-a661-4d82-ba97-935480492129/access_as_user" })
+            services.AddWebAppCallsProtectedWebApi(Configuration, initialScopes: new string[] { "user.read", "api://5e999e55-a661-4982-b897-965480492129/access_as_user" })
                     .AddInMemoryTokenCaches();
 
             // Then, choose your implementation.

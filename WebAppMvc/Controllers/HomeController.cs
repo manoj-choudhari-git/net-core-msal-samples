@@ -28,7 +28,7 @@ namespace WebAppMvc.Controllers
         public async Task<IActionResult> Index()
         {
             //// Acquire the access token.
-            string[] scopes = new string[] { "api://5e971e5c-a661-4d82-ba97-935480492129/access_as_user" };
+            string[] scopes = new string[] { "api://5e999e55-a661-4982-b897-965480492129/access_as_user" };
             string accessToken = await _tokenAcquisition.GetAccessTokenForUserAsync(scopes);
 
             // Use the access token to call a protected web API.

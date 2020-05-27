@@ -11,11 +11,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppMvc", "WebAppMvc\WebA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppAngular", "WebAppAngular\WebAppAngular.csproj", "{D8C2B80F-8196-4D7F-A96A-95500F6DD95C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B2C.WebApi", "B2C.WebApi\B2C.WebApi.csproj", "{ED148486-C2C7-4292-A05D-27F9E4246E53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "B2C.WebApi", "B2C.WebApi\B2C.WebApi.csproj", "{ED148486-C2C7-4292-A05D-27F9E4246E53}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzureAdB2C", "AzureAdB2C", "{574BA0B1-7CD5-4B3B-B0DA-A6E1ADB31F80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B2CWebAngularApp", "B2CWebAngularApp\B2CWebAngularApp.csproj", "{2FF643D1-02FD-41BA-BE77-E46B94D62E8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "B2CWebAngularApp", "B2CWebAngularApp\B2CWebAngularApp.csproj", "{2FF643D1-02FD-41BA-BE77-E46B94D62E8D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CallerWebApi", "CallerWebApi\CallerWebApi.csproj", "{E534A592-9CD8-4A91-A4D5-774D6935725A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleDaemonApp", "SampleDaemonApp\SampleDaemonApp.csproj", "{52BC8AE9-3C89-409E-A366-1BE9CEF67354}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,14 @@ Global
 		{2FF643D1-02FD-41BA-BE77-E46B94D62E8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FF643D1-02FD-41BA-BE77-E46B94D62E8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FF643D1-02FD-41BA-BE77-E46B94D62E8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E534A592-9CD8-4A91-A4D5-774D6935725A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E534A592-9CD8-4A91-A4D5-774D6935725A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E534A592-9CD8-4A91-A4D5-774D6935725A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E534A592-9CD8-4A91-A4D5-774D6935725A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52BC8AE9-3C89-409E-A366-1BE9CEF67354}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52BC8AE9-3C89-409E-A366-1BE9CEF67354}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52BC8AE9-3C89-409E-A366-1BE9CEF67354}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52BC8AE9-3C89-409E-A366-1BE9CEF67354}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
