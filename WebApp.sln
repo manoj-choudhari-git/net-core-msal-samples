@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CallerWebApi", "CallerWebAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleDaemonApp", "SampleDaemonApp\SampleDaemonApp.csproj", "{52BC8AE9-3C89-409E-A366-1BE9CEF67354}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B2CWPFApp", "B2CWPFApp\B2CWPFApp.csproj", "{80F318E1-A935-4E7F-A4B6-80270C542C4A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{52BC8AE9-3C89-409E-A366-1BE9CEF67354}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52BC8AE9-3C89-409E-A366-1BE9CEF67354}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52BC8AE9-3C89-409E-A366-1BE9CEF67354}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80F318E1-A935-4E7F-A4B6-80270C542C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80F318E1-A935-4E7F-A4B6-80270C542C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80F318E1-A935-4E7F-A4B6-80270C542C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80F318E1-A935-4E7F-A4B6-80270C542C4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{ED148486-C2C7-4292-A05D-27F9E4246E53} = {574BA0B1-7CD5-4B3B-B0DA-A6E1ADB31F80}
 		{2FF643D1-02FD-41BA-BE77-E46B94D62E8D} = {574BA0B1-7CD5-4B3B-B0DA-A6E1ADB31F80}
+		{80F318E1-A935-4E7F-A4B6-80270C542C4A} = {574BA0B1-7CD5-4B3B-B0DA-A6E1ADB31F80}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A8153F37-7F6E-4CF3-B650-5AF7CE2C9B18}
