@@ -15,6 +15,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="CallAPIButton" Content="Weather Forecast API" HorizontalAlignment="Right" Padding="5" Click="CallAPIButton_Click" Margin="5" FontFamily="Segoe Ui"/>
             <Button x:Name="SignInButton" Content="Sign In" HorizontalAlignment="Right" Padding="5" Click="SignInButton_Click" Margin="5" FontFamily="Segoe Ui"/>
             <Button x:Name="SignOutButton" Content="Sign Out" HorizontalAlignment="Right" Padding="5" Click="SignOutButton_Click" Margin="5" Visibility="Collapsed" FontFamily="Segoe Ui"/>
         </StackPanel>

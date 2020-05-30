@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp.TokenCache;
 
 namespace WpfApp
 {
@@ -28,7 +31,7 @@ namespace WpfApp
 
         private async void SignInButton_Click(object sender, RoutedEventArgs e)
         {
-            string[] scopes = new string[] { "user.read" };
+            string[] scopes = new string[] { "user.read", "api://5e999e55-a661-4982-b897-965480492129/access_as_user" };
 
             AuthenticationResult authResult = null;
             var app = App.PublicClientApp;
@@ -93,6 +96,27 @@ namespace WpfApp
                 TokenInfoText.Text += $"Username: {authResult.Account.Username}" + Environment.NewLine;
                 TokenInfoText.Text += $"Token Expires: {authResult.ExpiresOn.ToLocalTime()}" + Environment.NewLine;
             }
+        }
+
+        private async void CallAPIButton_Click(object sender, RoutedEventArgs e)
+        {
+            string[] scopes = new string[] { "api://5e999e55-a661-4982-b897-965480492129/access_as_user" };
+
+            // This shows simplest version assuming there will not be errors 
+            // while getting token silently.  If there are, token should be acquired 
+            // using interactive API
+            var accountList = await App.PublicClientApp.GetAccountsAsync();
+            var authResult = await App.PublicClientApp
+                            .AcquireTokenSilent(scopes, accountList.FirstOrDefault())
+                            .ExecuteAsync();
+
+            string accessToken = authResult.AccessToken;
+
+            string url = "https://localhost:44389/weatherforecast";
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            string json = await client.GetStringAsync(url);
+            ResultText.Text = json;
         }
     }
 }
