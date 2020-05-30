@@ -17,16 +17,16 @@ namespace B2CWPFApp
     /// </summary>
     public partial class App : Application
     {
-        private static readonly string Tenant = "fabrikamb2c.onmicrosoft.com";
-        private static readonly string AzureAdB2CHostname = "fabrikamb2c.b2clogin.com";
-        private static readonly string ClientId = "841e1190-d73a-450c-9d68-f5cf16b78e81";
-        private static readonly string RedirectUri = "https://fabrikamb2c.b2clogin.com/oauth2/nativeclient";
-        public static string PolicySignUpSignIn = "b2c_1_susi";
-        public static string PolicyEditProfile = "b2c_1_edit_profile";
-        public static string PolicyResetPassword = "b2c_1_reset";
+        private static readonly string Tenant = "samplead.onmicrosoft.com";
+        private static readonly string AzureAdB2CHostname = "samplead.b2clogin.com";
+        private static readonly string ClientId = "888fff1d-16c3-4de6-92af-3d4ab54a860a";
+        private static readonly string RedirectUri = "http://localhost";
+        public static string PolicySignUpSignIn = "B2C_1_SignUpSignIn";
+        public static string PolicyEditProfile = "B2C_1_Edit_Profile";
+        public static string PolicyResetPassword = "B2C_1_Pwd_Reset";
 
-        public static string[] ApiScopes = { "https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read" };
-        public static string ApiEndpoint = "https://fabrikamb2chello.azurewebsites.net/hello";
+        public static string[] Scopes = { "openid", "profile" };
+
         private static string AuthorityBase = $"https://{AzureAdB2CHostname}/tfp/{Tenant}/";
         public static string AuthoritySignUpSignIn = $"{AuthorityBase}{PolicySignUpSignIn}";
         public static string AuthorityEditProfile = $"{AuthorityBase}{PolicyEditProfile}";

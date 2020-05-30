@@ -1,11 +1,14 @@
 ﻿using Microsoft.Identity.Client;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -49,8 +52,7 @@ namespace B2CWPFApp
             try
             {
                 ResultText.Text = "";
-                authResult = await (app as PublicClientApplication).AcquireTokenInteractive(App.ApiScopes)
-                    ////.WithParentActivityOrWindow(new WindowInteropHelper(this).Handle)
+                authResult = await (app as PublicClientApplication).AcquireTokenInteractive(App.Scopes)
                     .ExecuteAsync();
 
                 DisplayUserInfo(authResult);
@@ -62,8 +64,7 @@ namespace B2CWPFApp
                 {
                     if (ex.Message.Contains("AADB2C90118"))
                     {
-                        authResult = await (app as PublicClientApplication).AcquireTokenInteractive(App.ApiScopes)
-                            ///.WithParentActivityOrWindow(new WindowInteropHelper(this).Handle)
+                        authResult = await (app as PublicClientApplication).AcquireTokenInteractive(App.Scopes)
                             .WithPrompt(Prompt.SelectAccount)
                             .WithB2CAuthority(App.AuthorityResetPassword)
                             .ExecuteAsync();
@@ -84,97 +85,78 @@ namespace B2CWPFApp
             }
         }
 
-        private async void EditProfileButton_Click(object sender, RoutedEventArgs e)
-        {
-            var app = App.PublicClientApp;
-            try
-            {
-                ResultText.Text = $"Calling API:{App.AuthorityEditProfile}";
+        
+        ////private async void CallApiButton_Click(object sender, RoutedEventArgs e)
+        ////{
+        ////    string[] scopes = = { "scopes-required-for-api"}
+        ////    AuthenticationResult authResult = null;
+        ////    var app = App.PublicClientApp;
+        ////    IEnumerable<IAccount> accounts = await App.PublicClientApp.GetAccountsAsync();
+        ////    try
+        ////    {
+        ////        authResult = await app.AcquireTokenSilent(App.Scopes, GetAccountByPolicy(accounts, App.PolicySignUpSignIn))
+        ////            .ExecuteAsync();
+        ////    }
+        ////    catch (MsalUiRequiredException ex)
+        ////    {
+        ////        // A MsalUiRequiredException happened on AcquireTokenSilentAsync. 
+        ////        // This indicates you need to call AcquireTokenAsync to acquire a token
+        ////        Debug.WriteLine($"MsalUiRequiredException: {ex.Message}");
 
-                AuthenticationResult authResult = await (app as PublicClientApplication).AcquireTokenInteractive(App.ApiScopes)
-                            ////.WithParentActivityOrWindow(new WindowInteropHelper(this).Handle)
-                            .WithB2CAuthority(App.AuthorityEditProfile)
-                            .WithPrompt(Prompt.NoPrompt)
-                            .ExecuteAsync(new System.Threading.CancellationToken());
+        ////        try
+        ////        {
+        ////            authResult = await app.AcquireTokenInteractive(App.Scopes)
+        ////                ////.WithParentActivityOrWindow(new WindowInteropHelper(this).Handle)
+        ////                .ExecuteAsync();
+        ////        }
+        ////        catch (MsalException msalex)
+        ////        {
+        ////            ResultText.Text = $"Error Acquiring Token:{Environment.NewLine}{msalex}";
+        ////        }
+        ////    }
+        ////    catch (Exception ex)
+        ////    {
+        ////        ResultText.Text = $"Error Acquiring Token Silently:{Environment.NewLine}{ex}";
+        ////        return;
+        ////    }
 
-                DisplayUserInfo(authResult);
-            }
-            catch (Exception ex)
-            {
-                ResultText.Text = $"Session has expired, please sign out and back in.{App.AuthorityEditProfile}{Environment.NewLine}{ex}";
-            }
-        }
+        ////    if (authResult != null)
+        ////    {
+        ////        if (string.IsNullOrEmpty(authResult.AccessToken))
+        ////        {
+        ////            ResultText.Text = "Access token is null (could be expired). Please do interactive log-in again.";
+        ////        }
+        ////        else
+        ////        {
+        ////            ResultText.Text = "not called"; //await GetHttpContentWithToken(App.ApiEndpoint, authResult.AccessToken);
+        ////            DisplayUserInfo(authResult);
+        ////        }
+        ////    }
+        ////}
 
-        private async void CallApiButton_Click(object sender, RoutedEventArgs e)
-        {
-            AuthenticationResult authResult = null;
-            var app = App.PublicClientApp;
-            IEnumerable<IAccount> accounts = await App.PublicClientApp.GetAccountsAsync();
-            try
-            {
-                authResult = await app.AcquireTokenSilent(App.ApiScopes, GetAccountByPolicy(accounts, App.PolicySignUpSignIn))
-                    .ExecuteAsync();
-            }
-            catch (MsalUiRequiredException ex)
-            {
-                // A MsalUiRequiredException happened on AcquireTokenSilentAsync. 
-                // This indicates you need to call AcquireTokenAsync to acquire a token
-                Debug.WriteLine($"MsalUiRequiredException: {ex.Message}");
-
-                try
-                {
-                    authResult = await app.AcquireTokenInteractive(App.ApiScopes)
-                        ////.WithParentActivityOrWindow(new WindowInteropHelper(this).Handle)
-                        .ExecuteAsync();
-                }
-                catch (MsalException msalex)
-                {
-                    ResultText.Text = $"Error Acquiring Token:{Environment.NewLine}{msalex}";
-                }
-            }
-            catch (Exception ex)
-            {
-                ResultText.Text = $"Error Acquiring Token Silently:{Environment.NewLine}{ex}";
-                return;
-            }
-
-            if (authResult != null)
-            {
-                if (string.IsNullOrEmpty(authResult.AccessToken))
-                {
-                    ResultText.Text = "Access token is null (could be expired). Please do interactive log-in again.";
-                }
-                else
-                {
-                    ResultText.Text = await GetHttpContentWithToken(App.ApiEndpoint, authResult.AccessToken);
-                    DisplayUserInfo(authResult);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Perform an HTTP GET request to a URL using an HTTP Authorization header
-        /// </summary>
-        /// <param name="url">The URL</param>
-        /// <param name="token">The token</param>
-        /// <returns>String containing the results of the GET operation</returns>
-        public async Task<string> GetHttpContentWithToken(string url, string token)
-        {
-            var httpClient = new HttpClient();
-            HttpResponseMessage response;
-            try
-            {
-                var request = new HttpRequestMessage(HttpMethod.Get, url);
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                response = await httpClient.SendAsync(request);
-                var content = await response.Content.ReadAsStringAsync();
-                return content;
-            }
-            catch (Exception ex)
-            {
-                return ex.ToString();
-            }
-        }
+        /////// <summary>
+        /////// Perform an HTTP GET request to a URL using an HTTP Authorization header
+        /////// </summary>
+        /////// <param name="url">The URL</param>
+        /////// <param name="token">The token</param>
+        /////// <returns>String containing the results of the GET operation</returns>
+        ////public async Task<string> GetHttpContentWithToken(string url, string token)
+        ////{
+        ////    var httpClient = new HttpClient();
+        ////    HttpResponseMessage response;
+        ////    try
+        ////    {
+        ////        var request = new HttpRequestMessage(HttpMethod.Get, url);
+        ////        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        ////        response = await httpClient.SendAsync(request);
+        ////        var content = await response.Content.ReadAsStringAsync();
+        ////        return content;
+        ////    }
+        ////    catch (Exception ex)
+        ////    {
+        ////        return ex.ToString();
+        ////    }
+        ////}
 
         private async void SignOutButton_Click(object sender, RoutedEventArgs e)
         {
@@ -202,7 +184,7 @@ namespace B2CWPFApp
                 var app = App.PublicClientApp;
                 IEnumerable<IAccount> accounts = await App.PublicClientApp.GetAccountsAsync();
 
-                AuthenticationResult authResult = await app.AcquireTokenSilent(App.ApiScopes,
+                AuthenticationResult authResult = await app.AcquireTokenSilent(App.Scopes,
                                                                                GetAccountByPolicy(accounts, App.PolicySignUpSignIn))
                     .ExecuteAsync();
 
@@ -224,8 +206,6 @@ namespace B2CWPFApp
         {
             if (signedIn)
             {
-                CallApiButton.Visibility = Visibility.Visible;
-                EditProfileButton.Visibility = Visibility.Visible;
                 SignOutButton.Visibility = Visibility.Visible;
 
                 SignInButton.Visibility = Visibility.Collapsed;
@@ -235,10 +215,7 @@ namespace B2CWPFApp
                 ResultText.Text = "";
                 TokenInfoText.Text = "";
 
-                CallApiButton.Visibility = Visibility.Collapsed;
-                EditProfileButton.Visibility = Visibility.Collapsed;
                 SignOutButton.Visibility = Visibility.Collapsed;
-
                 SignInButton.Visibility = Visibility.Visible;
             }
         }
@@ -246,41 +223,51 @@ namespace B2CWPFApp
         private void DisplayUserInfo(AuthenticationResult authResult)
         {
             TokenInfoText.Text = "";
-            if (authResult != null)
+
+            var jwtHandler = new JwtSecurityTokenHandler();
+            var jwtInput = authResult.IdToken;
+
+            //Check if readable token (string is in a JWT format)
+            var readableToken = jwtHandler.CanReadToken(jwtInput);
+
+            if (readableToken != true)
             {
-                JObject user = ParseIdToken(authResult.IdToken);
-
-                TokenInfoText.Text += $"Name: {user["name"]?.ToString()}" + Environment.NewLine;
-                TokenInfoText.Text += $"User Identifier: {user["oid"]?.ToString()}" + Environment.NewLine;
-                TokenInfoText.Text += $"Street Address: {user["streetAddress"]?.ToString()}" + Environment.NewLine;
-                TokenInfoText.Text += $"City: {user["city"]?.ToString()}" + Environment.NewLine;
-                TokenInfoText.Text += $"State: {user["state"]?.ToString()}" + Environment.NewLine;
-                TokenInfoText.Text += $"Country: {user["country"]?.ToString()}" + Environment.NewLine;
-                TokenInfoText.Text += $"Job Title: {user["jobTitle"]?.ToString()}" + Environment.NewLine;
-
-                if (user["emails"] is JArray emails)
-                {
-                    TokenInfoText.Text += $"Emails: {emails[0].ToString()}" + Environment.NewLine;
-                }
-                TokenInfoText.Text += $"Identity Provider: {user["iss"]?.ToString()}" + Environment.NewLine;
+                TokenInfoText.Text = "The token doesn't seem to be in a proper JWT format.";
             }
+            if (readableToken == true)
+            {
+                var token = jwtHandler.ReadJwtToken(jwtInput);
+
+                //Extract the headers of the JWT
+                var headers = token.Header;
+                var jwtHeader = "{";
+                foreach (var h in headers)
+                {
+                    jwtHeader += '"' + h.Key + "\":\"" + h.Value + "\",";
+                }
+                jwtHeader += "}";
+                TokenInfoText.Text = "Header:\r\n" + JToken.Parse(jwtHeader).ToString(Formatting.Indented);
+
+                //Extract the payload of the JWT
+                var claims = token.Claims;
+                var jwtPayload = "{";
+                foreach (Claim c in claims)
+                {
+                    jwtPayload += '"' + c.Type + "\":\"" + c.Value + "\",";
+                }
+                jwtPayload += "}";
+                TokenInfoText.Text += "\r\nPayload:\r\n" + JToken.Parse(jwtPayload).ToString(Formatting.Indented);
+            }
+
         }
 
-        JObject ParseIdToken(string idToken)
-        {
-            // Parse the idToken to get user info
-            idToken = idToken.Split('.')[1];
-            idToken = Base64UrlDecode(idToken);
-            return JObject.Parse(idToken);
-        }
-
-        private string Base64UrlDecode(string s)
-        {
-            s = s.Replace('-', '+').Replace('_', '/');
-            s = s.PadRight(s.Length + (4 - s.Length % 4) % 4, '=');
-            var byteArray = Convert.FromBase64String(s);
-            var decoded = Encoding.UTF8.GetString(byteArray, 0, byteArray.Count());
-            return decoded;
-        }
+        ////private string Base64UrlDecode(string s)
+        ////{
+        ////    s = s.Replace('-', '+').Replace('_', '/');
+        ////    s = s.PadRight(s.Length + (4 - s.Length % 4) % 4, '=');
+        ////    var byteArray = Convert.FromBase64String(s);
+        ////    var decoded = Encoding.UTF8.GetString(byteArray, 0, byteArray.Count());
+        ////    return decoded;
+        ////}
     }
 }
