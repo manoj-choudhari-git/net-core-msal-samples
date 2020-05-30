@@ -1,4 +1,6 @@
-﻿using Microsoft.Identity.Client;
+﻿using B2CWPFApp.Extensions;
+using Microsoft.Identity.Client;
+using Microsoft.Identity.Client.Extensibility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -53,6 +55,7 @@ namespace B2CWPFApp
             {
                 ResultText.Text = "";
                 authResult = await (app as PublicClientApplication).AcquireTokenInteractive(App.Scopes)
+                    .WithCustomWebUi(new EmbeddedCustomWebUI(this))
                     .ExecuteAsync();
 
                 DisplayUserInfo(authResult);
@@ -107,6 +110,7 @@ namespace B2CWPFApp
                 try
                 {
                     authResult = await app.AcquireTokenInteractive(App.Scopes)
+                        .WithCustomWebUi(new EmbeddedCustomWebUI(this))
                         .ExecuteAsync();
                 }
                 catch (MsalException msalex)
