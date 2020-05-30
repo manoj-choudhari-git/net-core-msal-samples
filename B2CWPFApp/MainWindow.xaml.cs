@@ -85,78 +85,80 @@ namespace B2CWPFApp
             }
         }
 
-        
-        ////private async void CallApiButton_Click(object sender, RoutedEventArgs e)
-        ////{
-        ////    string[] scopes = = { "scopes-required-for-api"}
-        ////    AuthenticationResult authResult = null;
-        ////    var app = App.PublicClientApp;
-        ////    IEnumerable<IAccount> accounts = await App.PublicClientApp.GetAccountsAsync();
-        ////    try
-        ////    {
-        ////        authResult = await app.AcquireTokenSilent(App.Scopes, GetAccountByPolicy(accounts, App.PolicySignUpSignIn))
-        ////            .ExecuteAsync();
-        ////    }
-        ////    catch (MsalUiRequiredException ex)
-        ////    {
-        ////        // A MsalUiRequiredException happened on AcquireTokenSilentAsync. 
-        ////        // This indicates you need to call AcquireTokenAsync to acquire a token
-        ////        Debug.WriteLine($"MsalUiRequiredException: {ex.Message}");
 
-        ////        try
-        ////        {
-        ////            authResult = await app.AcquireTokenInteractive(App.Scopes)
-        ////                ////.WithParentActivityOrWindow(new WindowInteropHelper(this).Handle)
-        ////                .ExecuteAsync();
-        ////        }
-        ////        catch (MsalException msalex)
-        ////        {
-        ////            ResultText.Text = $"Error Acquiring Token:{Environment.NewLine}{msalex}";
-        ////        }
-        ////    }
-        ////    catch (Exception ex)
-        ////    {
-        ////        ResultText.Text = $"Error Acquiring Token Silently:{Environment.NewLine}{ex}";
-        ////        return;
-        ////    }
+        private async void CallApiButton_Click(object sender, RoutedEventArgs e)
+        {
+            //// Try to Acquire token silently
+            //// If not possible, then try to acquire it interactively.
+            AuthenticationResult authResult = null;
+            var app = App.PublicClientApp;
+            IEnumerable<IAccount> accounts = await App.PublicClientApp.GetAccountsAsync();
+            try
+            {
+                authResult = await app.AcquireTokenSilent(App.ApiScopes, GetAccountByPolicy(accounts, App.PolicySignUpSignIn))
+                    .ExecuteAsync();
+            }
+            catch (MsalUiRequiredException ex)
+            {
+                // A MsalUiRequiredException happened on AcquireTokenSilentAsync. 
+                // This indicates you need to call AcquireTokenAsync to acquire a token
+                Debug.WriteLine($"MsalUiRequiredException: {ex.Message}");
 
-        ////    if (authResult != null)
-        ////    {
-        ////        if (string.IsNullOrEmpty(authResult.AccessToken))
-        ////        {
-        ////            ResultText.Text = "Access token is null (could be expired). Please do interactive log-in again.";
-        ////        }
-        ////        else
-        ////        {
-        ////            ResultText.Text = "not called"; //await GetHttpContentWithToken(App.ApiEndpoint, authResult.AccessToken);
-        ////            DisplayUserInfo(authResult);
-        ////        }
-        ////    }
-        ////}
+                try
+                {
+                    authResult = await app.AcquireTokenInteractive(App.Scopes)
+                        .ExecuteAsync();
+                }
+                catch (MsalException msalex)
+                {
+                    ResultText.Text = $"Error Acquiring Token:{Environment.NewLine}{msalex}";
+                }
+            }
+            catch (Exception ex)
+            {
+                ResultText.Text = $"Error Acquiring Token Silently:{Environment.NewLine}{ex}";
+                return;
+            }
 
-        /////// <summary>
-        /////// Perform an HTTP GET request to a URL using an HTTP Authorization header
-        /////// </summary>
-        /////// <param name="url">The URL</param>
-        /////// <param name="token">The token</param>
-        /////// <returns>String containing the results of the GET operation</returns>
-        ////public async Task<string> GetHttpContentWithToken(string url, string token)
-        ////{
-        ////    var httpClient = new HttpClient();
-        ////    HttpResponseMessage response;
-        ////    try
-        ////    {
-        ////        var request = new HttpRequestMessage(HttpMethod.Get, url);
-        ////        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        ////        response = await httpClient.SendAsync(request);
-        ////        var content = await response.Content.ReadAsStringAsync();
-        ////        return content;
-        ////    }
-        ////    catch (Exception ex)
-        ////    {
-        ////        return ex.ToString();
-        ////    }
-        ////}
+            //// After token is available
+            //// Call the API and Show the result
+            if (authResult != null)
+            {
+                if (string.IsNullOrEmpty(authResult.AccessToken))
+                {
+                    ResultText.Text = "Access token is null (could be expired). Please do interactive log-in again.";
+                }
+                else
+                {
+                    ResultText.Text = await GetHttpContentWithToken(App.ApiEndpoint, authResult.AccessToken);
+                    DisplayUserInfo(authResult);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Perform an HTTP GET request to a URL using an HTTP Authorization header
+        /// </summary>
+        /// <param name="url">The URL</param>
+        /// <param name="token">The token</param>
+        /// <returns>String containing the results of the GET operation</returns>
+        public async Task<string> GetHttpContentWithToken(string url, string token)
+        {
+            var httpClient = new HttpClient();
+            HttpResponseMessage response;
+            try
+            {
+                var request = new HttpRequestMessage(HttpMethod.Get, url);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                response = await httpClient.SendAsync(request);
+                var content = await response.Content.ReadAsStringAsync();
+                return content;
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+        }
 
         private async void SignOutButton_Click(object sender, RoutedEventArgs e)
         {

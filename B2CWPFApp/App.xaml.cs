@@ -25,7 +25,9 @@ namespace B2CWPFApp
         public static string PolicyEditProfile = "B2C_1_Edit_Profile";
         public static string PolicyResetPassword = "B2C_1_Pwd_Reset";
 
-        public static string[] Scopes = { "openid", "profile" };
+        public static string ApiEndpoint = "https://localhost:44379/weatherforecast";
+        public static string[] ApiScopes = { "https://samplead.onmicrosoft.com/sample-api/api-scope" };
+        public static string[] Scopes = { "openid", "profile", "https://samplead.onmicrosoft.com/sample-api/api-scope" };
 
         private static string AuthorityBase = $"https://{AzureAdB2CHostname}/tfp/{Tenant}/";
         public static string AuthoritySignUpSignIn = $"{AuthorityBase}{PolicySignUpSignIn}";
