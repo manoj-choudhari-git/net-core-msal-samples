@@ -44,7 +44,7 @@ namespace B2CWPFApp
 
 
 
-        private void webBrowserControl_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
+        private void webBrowserControl_Navigating(object sender, NavigatingCancelEventArgs e)
         {
             // if URI does not starts with redirect URI, then return
             if (!e.Uri.ToString().StartsWith(_redirectUri.ToString()))
@@ -60,6 +60,7 @@ namespace B2CWPFApp
                 // It has a code parameter.
                 _taskCompletionSource.SetResult(e.Uri);
                 Close();
+                return;
             }
 
 

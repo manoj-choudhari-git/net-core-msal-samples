@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:B2CWPFApp"
         mc:Ignorable="d"
-        Title="CustomLoginWindow" Height="450" Width="800">
+        Title="CustomLoginWindow" Height="450" Width="800"
+        Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
         <WebBrowser x:Name="webBrowserControl" Navigating="webBrowserControl_Navigating" />
     </Grid>
